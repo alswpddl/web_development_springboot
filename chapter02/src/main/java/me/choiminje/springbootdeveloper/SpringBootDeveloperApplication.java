@@ -133,6 +133,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
                 제공하기 쉽게 하는 의존성 모음
             spring-boot-starter-jpa : ORM(추후 수업 예정)을 사용하기 위한 인터페이스의 모음인
                 JPA를 더 쉽게 사용하기 위한 의존성 모음
+
+        스프링 부트 3와 자바 버전
+            스프링 부트 3은 자바 17버전 이후부터 사용 가능합니다!!!!
  */
 
 @SpringBootApplication
