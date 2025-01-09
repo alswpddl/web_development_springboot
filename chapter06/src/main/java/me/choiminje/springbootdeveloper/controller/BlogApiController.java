@@ -4,12 +4,13 @@ package me.choiminje.springbootdeveloper.controller;
 import lombok.RequiredArgsConstructor;
 import me.choiminje.springbootdeveloper.domain.Article;
 import me.choiminje.springbootdeveloper.dto.AddArticleRequest;
+import me.choiminje.springbootdeveloper.dto.ArticleResponse;
 import me.choiminje.springbootdeveloper.service.BlogService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -80,5 +81,74 @@ public class BlogApiController {
         내일은 반복작업을 줄여줄 테스트 코드들을 작성하겠습니다.
             - 매번 H2 들어가는게 번거로워서
             test를 이용할 예정
+
+            test 폴더에 BlogApiControllerTest.java를 만들기 위한 방법
+            파일 내에 들어와서 public class BlogApiController 표기된 부분으로 들어가서
+            클래스명 클릭 + alt + enter -> create test가 있었습니다.
      */
+
+    @GetMapping("/api/articles")
+    public ResponseEntity<List<ArticleResponse>> findAllArticles () {
+        List<ArticleResponse> articles = blogService.findAll()
+                .stream()
+                .map(ArticleResponse::new)
+                .toList();
+
+        return ResponseEntity.ok().body(articles);
+    }
+    /*
+        /api/articles Get 요청이 들어오면 글 전체를 조회하는 finAll() 메서드르 호출
+        -> 다음 응답용 객체인 ArticleResonse로 파싱해서 body에 담아
+        클라이언트에게 전송합니다 -> 해당 코드에서는 stream을 적용했습니다 -> 추후 설명
+
+        * stream : 여러 데이터가 모여 있는 컬렉션을 간편하게 처리하기 위해서 사ㅛㅇ하는 기능
+            자바 8에 추가
+     */
+    @GetMapping("/api/articles/{id}")
+    // URL 경로에서 값을 추출
+    public ResponseEntity<ArticleResponse> findArticle(@PathVariable long id) { // URL에서 {id}에 해당하는 값이 id로 들어옴
+        Article article = blogService.findById(id);
+
+        return ResponseEntity.ok()
+                .body(new ArticleResponse(article));
+    }
+    /*
+        @PathVariable : URL에서 값을 가져오는 애너테이션.
+            /api/articles/3 GET 요청을 받으면 id에 3이 argument로 들어오게 됩니다.
+            그리고 이 값은 바로 전에 만든 서비스 클래스의 findById() 메서드로 넘어가서 3번 블로그
+            글을 찾아옵니다. 그리고 그 글을 찾으면 3번 글의 정보(제목/내용)을 body 담아서
+            웹브라우저 가지고 옵니다.
+     */
+
+    @DeleteMapping("api/articles/{id}")
+    public ResponseEntity<Void> deleteArticle(@PathVariable long id) {
+        blogService.delete(id);
+
+        return ResponseEntity.ok()
+                .build();
+    }
+    /*
+        @PathVariable 통해서 {id}에 해당하는 값이 들어옵니다.
+
+        POSTMAN
+
+        GET http://localhost:8080/api/articles
+
+        조회했을 떄 저희가 작성한 data.sql이 적용된
+        제목1부터 내용3까지의 JSON 데이터가 있는지 확인하고,
+        거기서 특정 아이디의 데이터를 삭제하겠습니다.
+
+        조회 성공하셨으면
+        DELET로 HTTP 메서드로 바꿔주고,
+        http://localhost:8080/api/articles/1 하고 Send 버튼 누릅니다.
+
+        GET으로 HTTP 메서드 바꿔주고,
+        http://localhost:8080/api/articles/1 -> 이건 지워졌기 때문에 조회 x
+
+        http://localhost:8080/api/articles -> 얘로 조회해서 전체 글 목록이 줄었는지 확인
+
+        다 확인 끝났으면 BlogApiControllerTest.java가서 테스트형태의 메서드로 삭제 확인
+     */
+
+
 }
