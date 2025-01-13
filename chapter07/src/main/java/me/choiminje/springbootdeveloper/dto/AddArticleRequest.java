@@ -13,7 +13,7 @@ public class AddArticleRequest {
     private String title;
     private String content;
 
-    public Article toEntity() {     // 생성자를 이용해 객체를 생성
+    public Article toEntity(){  // 생성자를 이용해 객체를 생성
         return Article.builder()
                 .title(title)
                 .content(content)
@@ -27,7 +27,4 @@ public class AddArticleRequest {
         지시 사항
         dto와 동일한 라인에 service 패키지 생성 -> BlogService.java 클래스 생성
      */
-
-
-
 }
