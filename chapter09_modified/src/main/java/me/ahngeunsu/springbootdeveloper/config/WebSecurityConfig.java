@@ -27,9 +27,10 @@ public class WebSecurityConfig {
     @Bean
     public WebSecurityCustomizer configure() {
         return (web) -> web.ignoring()
-                .requestMatchers(toH2Console()) //import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
+                .requestMatchers(toH2Console())
                 .requestMatchers(new AntPathRequestMatcher("/static/**"));
     }
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -64,6 +65,7 @@ public class WebSecurityConfig {
         authProvider.setPasswordEncoder(bCryptPasswordEncoder);
         return new ProviderManager(authProvider);
     }
+
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
