@@ -18,7 +18,8 @@ public class TokenApiController {
     @PostMapping("/api/token")
     public ResponseEntity<CreateAccessTokenResponse> createNewAccessToken
             (@RequestBody CreateAccessTokenRequest request) {
-        String newAccessToken = tokenService.createNewAccessToken(request.getRefreshToken());
+        String newAccessToken = tokenService.createNewAccessToken(request
+                .getRefreshToken());
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new CreateAccessTokenResponse(newAccessToken));

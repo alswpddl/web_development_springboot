@@ -1,3 +1,5 @@
+package me.ahngeunsu.springbootdeveloper.config;
+
 import lombok.RequiredArgsConstructor;
 import me.ahngeunsu.springbootdeveloper.config.jwt.TokenProvider;
 import me.ahngeunsu.springbootdeveloper.config.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
@@ -17,6 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 @RequiredArgsConstructor
@@ -60,12 +63,12 @@ public class WebOAuthSecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/api/**")).authenticated()
                         .anyRequest().permitAll())
                 .oauth2Login(oauth2 -> oauth2
-                                .loginPage("/login")
-                                // 4. Authorization 요청과 관련된 상태 저장
-                                .authorizationEndpoint(authorizationEndpoint -> authorizationEndpoint.authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository()))
-                                .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint.userService(oAuth2UserCustomService))
-                                // 5. 인증 성공시 실행할 핸들러
-                                .successHandler(oAuth2SuccessHandler())
+                        .loginPage("/login")
+                        // 4. Authorization 요청과 관련된 상태 저장
+                        .authorizationEndpoint(authorizationEndpoint -> authorizationEndpoint.authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository()))
+                        .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint.userService(oAuth2UserCustomService))
+                        // 5. 인증 성공시 실행할 핸들러
+                        .successHandler(oAuth2SuccessHandler())
                         //authorizationRequestRepository(oauth2AuthorizationRequestBasedOnCookieRepository()))
                 )
                 // 6. /api로 시작하는 url인 경우 401 상태 코드를 반환하도록 예외 처리
@@ -103,10 +106,9 @@ public class WebOAuthSecurityConfig {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }
 /*
-    OAth2에 필요한 정보를 세션이 아니라 쿠키에 저장해 쓸 수 있도록 인증 요청과 관련된
+    OAuth2에 필요한 정보를 세션이 아니라 쿠키에 저장해 쓸 수 있도록 인증 요청과 관련된
     상태를 저장할 저장소를 구현합니다.
 
     config/oauth 내에

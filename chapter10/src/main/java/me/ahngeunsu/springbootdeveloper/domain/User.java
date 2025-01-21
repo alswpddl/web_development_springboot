@@ -30,7 +30,7 @@ public class User implements UserDetails {
     private String password;
 
     @Column(name = "nickname", unique = true)
-    private String nickname;    // -> 빌더에 해당 필드 추가
+    private String nickname; // -> 빌더에 해당 필드 추가
 
     @Builder
     public User(String email, String password, String nickname) {
@@ -54,6 +54,7 @@ public class User implements UserDetails {
         return password;
     }
 
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -61,6 +62,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
+
         return true;
     }
 

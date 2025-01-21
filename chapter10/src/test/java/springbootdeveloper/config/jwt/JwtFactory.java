@@ -17,14 +17,16 @@ import static java.util.Collections.emptyMap;
 public class JwtFactory {
     private String subject = "test@email.com";
     private Date issuedAt = new Date();
-    private Date expiration = new Date(new Date().getTime() + Duration.ofDays(14).toMillis());
+    private Date expiration = new Date(new Date().getTime() +
+            Duration.ofDays(14).toMillis());
     private Map<String, Object> claims = emptyMap();
 
-    // 빌더 패턴을 사용해 설정이 필요한 데이터만 선택 설정
+
     @Builder
-    public JwtFactory(String subject, Date issuedAt, Date expiration, Map<String, Object> claims) {
+    public JwtFactory(String subject, Date isuuedAt,
+                      Date expiration, Map<String, Object> claims) {
         this.subject = subject != null ? subject : this.subject;    // 삼항연산자
-        this.issuedAt = issuedAt != null ? issuedAt : this.issuedAt;
+        this.issuedAt = issuedAt != null ? isuuedAt : this.issuedAt;
         this.expiration = expiration != null ? expiration : this.expiration;
         this.claims = claims != null ? claims : this.claims;
     }
@@ -33,7 +35,7 @@ public class JwtFactory {
         return JwtFactory.builder().build();
     }
 
-    // jjwt 라이브러리를 사용해 JWT 생성
+
     public String createToken(JwtProperties jwtProperties) {
         return Jwts.builder()
                 .setSubject(subject)
@@ -46,9 +48,3 @@ public class JwtFactory {
                 .compact();
     }
 }
-/*
-    빌더 패턴을 사용해 객체를 만들 때 테스트가 필요한 데이터만 선택.
-    빌더 패턴을 사용하지 않을 경우 필드 기본값을 사용하게 됩니다.
-
-        test/java/me.../config/jwt에 TokenProviderTest.java 파일을 만들겁니다.
- */

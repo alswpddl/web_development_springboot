@@ -1,7 +1,6 @@
 package me.ahngeunsu.springbootdeveloper.util;
 
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.util.SerializationUtils;
@@ -14,7 +13,7 @@ public class CookieUtil {
                             String name,
                             String value,
                             int maxAge) {
-        // import jakarta.servlet.http.Cookie;
+        //import jakarta.servlet.http.Cookie;
         Cookie cookie = new Cookie(name, value);
         cookie.setPath("/");
         cookie.setMaxAge(maxAge);
@@ -30,7 +29,7 @@ public class CookieUtil {
             return;                 // return; -> 메서드 종료
         }
 
-        for (Cookie cookie : cookies) {     // enhaced for loops로 작성
+        for (Cookie cookie : cookies) {     // enhanced for loops로 작성
             if (name.equals(cookie.getName())) {
                 cookie.setValue("");
                 cookie.setPath("/");
@@ -40,7 +39,7 @@ public class CookieUtil {
         }
     }
     /*
-        deleteCookie() : 쿠키 이름을 입력 받아서 쿠키를 삭제
+        deleteCookie() : 쿠키 이름을 입력 받아서 쿠키를 삭제.
             -> 실제로 삭제하는 방법은 없으므로 파라미터로 넘어온 키의 쿠키를
             빈값으로 바꾸고 만료 시간을 0으로 설정해서 쿠키가 재생성되자마자 만료처리를
             함으로써 구성했습니다.
@@ -51,14 +50,14 @@ public class CookieUtil {
     public static String serialize(Object obj) {
         return Base64.getUrlEncoder()
                 .encodeToString(SerializationUtils.serialize(obj));
-                // import org.springframework.util.SerializationUtils;
+                //import org.springframework.util.SerializationUtils;
     }
 
     // 쿠키를 역직렬화해서 객체로 변환
     public static <T> T deserialize(Cookie cookie, Class<T> cls) {
         return cls.cast(
                 SerializationUtils.deserialize(
-                        Base64.getDecoder().decode(cookie.getValue())
+                        Base64.getUrlDecoder().decode(cookie.getValue())
                 )
         );
     }
@@ -70,4 +69,5 @@ public class CookieUtil {
     사용자 정보가 없다면 새 사용자를 생성해서 DB에 저장할 수 있도록 하겠습니다.
 
     먼저, domain의 User.java를 수정하겠습니다.
+
  */

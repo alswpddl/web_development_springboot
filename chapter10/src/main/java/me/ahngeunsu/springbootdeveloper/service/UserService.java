@@ -17,8 +17,8 @@ public class UserService {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         return userRepository.save(User.builder()
-                .email(dto.getEmail())
-                .password(encoder.encode(dto.getPassword()))
+                        .email(dto.getEmail())
+                        .password(encoder.encode(dto.getPassword()))
                 .build()).getId();
     }
 

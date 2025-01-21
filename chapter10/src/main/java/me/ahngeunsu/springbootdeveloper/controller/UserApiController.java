@@ -23,8 +23,6 @@ public class UserApiController {
         return "redirect:/login";
     }
 
-
-    //로그아웃 관련
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         new SecurityContextLogoutHandler().logout(request, response,

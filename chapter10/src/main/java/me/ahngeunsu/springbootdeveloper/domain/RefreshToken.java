@@ -21,12 +21,12 @@ public class RefreshToken {
     private String refreshToken;
 
     public RefreshToken(Long userId, String refreshToken) {
-        this.userId=userId;
-        this.refreshToken=refreshToken;
+        this.userId = userId;
+        this.refreshToken = refreshToken;
     }
 
     public RefreshToken update(String refreshToken) {
-        this.refreshToken=refreshToken;
+        this.refreshToken = refreshToken;
         return this;
     }
 }

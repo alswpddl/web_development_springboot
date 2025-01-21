@@ -10,12 +10,13 @@ import java.time.Duration;
 @RequiredArgsConstructor
 @Service
 public class TokenService {
+
     private final TokenProvider tokenProvider;
     private final RefreshTokenService refreshTokenService;
     private final UserService userService;
 
     public String createNewAccessToken(String refreshToken) {
-        if (!tokenProvider.validToken(refreshToken)) {
+        if(!tokenProvider.validToken(refreshToken)) {
             throw new IllegalArgumentException("unexpected token");
         }
 
